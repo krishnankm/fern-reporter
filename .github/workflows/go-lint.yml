@@ -6,7 +6,6 @@ on:
 
 permissions:
   contents: read
-  # Optional: allow read access to pull request. Use with `only-new-issues` option.
   pull-requests: read
 
 jobs:
@@ -19,8 +18,5 @@ jobs:
         with:
           go-version-file: go.mod
           cache: false
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v7
-        with:
-          version: v2.0
-          args: --timeout=10m -v
+      - run: go install dagger.io/dagger@latest
+      - run: dagger run go run ./dagger lint
